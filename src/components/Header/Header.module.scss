@@ -1,0 +1,22 @@
+.header {
+    grid-area: header;
+    background: #365d98;
+    grid-column: 2/4;
+    display: flex;
+    justify-content: space-between;
+    color: white;
+
+    img {
+        width: 50px;
+    }
+
+    .header__login {
+        margin: 15px 20px 0 0;
+    }
+
+    a {
+        text-decoration: none;
+        color: white;
+    }
+}
+
