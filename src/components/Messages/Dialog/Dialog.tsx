@@ -7,7 +7,7 @@ type DialogPropsType = {
     userName: string,
     avaUrl: string,
 }
-const Dialog = (props: DialogPropsType) => {
+function Dialog (props:DialogPropsType) {
     return (
       <div className={styles.dialogs}>
           <UserAva avaUrl={props.avaUrl}/>
@@ -21,7 +21,8 @@ const Dialog = (props: DialogPropsType) => {
 type UserAvaPropsType = {
     avaUrl: string;
 }
-const UserAva = (props: UserAvaPropsType) => {
+
+function UserAva(props: UserAvaPropsType) {
     return (
       <div className={styles.userAva}>
           <img src={props.avaUrl} alt=""/>

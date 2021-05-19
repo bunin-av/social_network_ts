@@ -1,12 +1,20 @@
 import styles from './FriendsSidebar.module.scss';
 import React from "react";
-import userPhoto from "../../../assets/images/userS1.png";
+import {FriendSideType} from "../../../redux/state";
 
 
-const FriendsSidebar = (props: any) => {
-    let friendElements = props.friendList
-      .map((friend: { photos: { small: string }; name: string; id: number }) =>
-        <FriendElement avaUrl={friend.photos.small} userName={friend.name} key={friend.id}/>)
+type FriendsSidebarType = {
+    state: Array<FriendSideType>
+}
+
+function FriendsSidebar (props:FriendsSidebarType) {
+    let friendElements = props.state.map((f: { id: number; avaUrl: string; userName: string; }) =>
+        <div key={f.id}>
+            <div className={styles.userAva}>
+                <img src={f.avaUrl} alt=""/>
+            </div>
+            <div className={styles.friendName}>{f.userName}</div>
+        </div>)
 
     return (
       <div className={styles.friends}>
@@ -16,20 +24,5 @@ const FriendsSidebar = (props: any) => {
     )
 }
 
-
-type FriendNamePropsType = {
-    userName: string,
-    avaUrl: string
-}
-const FriendElement = (props: FriendNamePropsType) => {
-    return (
-      <div>
-          <div className={styles.userAva}>
-              <img src={props.avaUrl != null ? props.avaUrl : userPhoto} alt=""/>
-          </div>
-          <div className={styles.friendName}>{props.userName}</div>
-      </div>
-    )
-}
 
 export default FriendsSidebar

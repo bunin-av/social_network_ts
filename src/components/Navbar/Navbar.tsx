@@ -1,33 +1,18 @@
 import React from "react";
 import styles from "./Navbar.module.scss"
-import {NavLink} from "react-router-dom";
-import FriendsSidebarContainer from "./FriendsSidebar/FriendsSidebarContainer";
+import FriendsSidebar from "./FriendsSidebar/FriendsSidebar";
+import {StateType} from "../../redux/state";
+import Menu from "./Menu/Menu";
 
+type NavbarType = {
+    state: StateType
+}
 
-const Navbar = () => {
+function Navbar(props: NavbarType) {
     return (
       <nav className={styles.navbar}>
-          <div className={styles.menu}>
-              <div className={styles.menu__elem}>
-                  <NavLink to="/profile" activeClassName={styles.active}>Profile</NavLink>
-              </div>
-              <div className={styles.menu__elem}>
-                  <NavLink to="/messages" activeClassName={styles.active}>Messages</NavLink>
-              </div>
-              <div className={styles.menu__elem}>
-                  <NavLink to="/news" activeClassName={styles.active}>News</NavLink>
-              </div>
-              <div className={styles.menu__elem}>
-                  <NavLink to="/music" activeClassName={styles.active}>Music</NavLink>
-              </div>
-              <div className={styles.menu__elem}>
-                  <NavLink to="/settings" activeClassName={styles.active}>Settings</NavLink>
-              </div>
-              <div className={styles.menu__elem}>
-                  <NavLink to="/find_friends" activeClassName={styles.active}>Find Friends</NavLink>
-              </div>
-          </div>
-          <FriendsSidebarContainer/>
+          <Menu/>
+          <FriendsSidebar state={props.state.friendsSidebar}/>
       </nav>
     )
 }
