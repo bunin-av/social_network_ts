@@ -38,8 +38,6 @@ export type FriendSideType = {
 
 export type StoreType = {
     _state: StateType
-    /*    addPost: () => void
-        addNewPostText: (text: string) => void*/
     subscribe: (callback: () => void) => void
     _renderEntireTree: () => void
     getState: () => StateType
@@ -147,4 +145,5 @@ declare global {
         store: any
     }
 }
+
 window.store = store
