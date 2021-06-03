@@ -4,26 +4,20 @@ import MyPosts from "./MyPosts/MyPosts";
 import Wallpaper from "./Wallpaper/Wallpaper";
 import Ava from "./Ava/Ava";
 import Bio from "./Bio/Bio";
-import {ProfilePageType} from "../../redux/state";
+import {PropsType} from "../Content/Content";
 
 
-type ProfilePropsType = {
-    state: ProfilePageType
-    addPost: () => void
-    addNewPostText: (text:string) => void
-}
-
-function Profile (props:ProfilePropsType) {
+function Profile(props: PropsType) {
     return (
-      <div className={styles.content}>
-          <Wallpaper/>
-          <Ava/>
-          <Bio/>
-          <MyPosts state={props.state}
-                   addPost={props.addPost}
-                   addNewPostText={props.addNewPostText}
-          />
-      </div>
+        <div className={styles.content}>
+            <Wallpaper/>
+            <Ava/>
+            <Bio/>
+            <MyPosts
+                state={props.state}
+                dispatch={props.dispatch}
+            />
+        </div>
     )
 }
 

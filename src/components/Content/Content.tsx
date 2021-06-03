@@ -6,25 +6,32 @@ import News from "../News/News";
 import Profile from "../Profile/Profile";
 import {Route} from "react-router-dom";
 import React from "react";
-import {StateType} from "../../redux/state";
+import {ActionsTypes, StateType} from "../../redux/state";
 
-type ContentPropsType = {
+export type PropsType = {
     state: StateType
-    addPost: () => void
-    addNewPostText: (text:string) => void
+    dispatch: (action: ActionsTypes) => void
 }
 
-function Content(props: ContentPropsType) {
+function Content(props: PropsType) {
+
+
     return (
-      <div className={styles.wrapper}>
-          <Route path={'/profile'} render={() => <Profile state={props.state.profilePage}
-                                                          addPost={props.addPost}
-                                                          addNewPostText={props.addNewPostText}/>}/>
-          <Route path={'/messages'} render={() => <Messages state={props.state.messagesPage}/>}/>
-          <Route path={'/music'} component={Music}/>
-          <Route path={'/news'} component={News}/>
-          <Route path={'/settings'} component={Settings}/>
-      </div>
+        <div className={styles.wrapper}>
+            <Route
+                path={'/profile'}
+                render={() => <Profile
+                    state={props.state}
+                    dispatch={props.dispatch}
+                />}
+            />
+            <Route
+                path={'/messages'}
+                render={() => <Messages state={props.state.messagesPage}/>}/>
+            <Route path={'/music'} component={Music}/>
+            <Route path={'/news'} component={News}/>
+            <Route path={'/settings'} component={Settings}/>
+        </div>
     )
 }
 

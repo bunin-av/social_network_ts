@@ -5,27 +5,25 @@ import Navbar from "./components/Navbar/Navbar";
 import {BrowserRouter} from "react-router-dom";
 import TopSidebar from "./components/TopSidebar/TopSidebar";
 import Content from "./components/Content/Content";
-import {StateType} from "./redux/state";
+import {StoreType} from "./redux/state";
 
 type AppPropsType = {
-    state: StateType
-    addPost: () => void
-    addNewPostText: (text: string) => void
+    store: StoreType
 }
 
 function App(props: AppPropsType) {
     return (
-      <BrowserRouter>
-          <div className="app-wrapper">
-              <Header/>
-              <TopSidebar/>
-              <Navbar state={props.state}/>
-              <Content state={props.state}
-                       addPost={props.addPost}
-                       addNewPostText={props.addNewPostText}
-              />
-          </div>
-      </BrowserRouter>
+        <BrowserRouter>
+            <div className="app-wrapper">
+                <Header/>
+                <TopSidebar/>
+                <Navbar state={props.store.getState()}/>
+                <Content
+                    state={props.store.getState()}
+                    dispatch={props.store.dispatch.bind(props.store)}
+                />
+            </div>
+        </BrowserRouter>
     );
 }
 
