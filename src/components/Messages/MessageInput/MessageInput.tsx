@@ -1,19 +1,31 @@
 import React from "react";
 
-let sendMessageRef: any = React.createRef()
+type MessageInput = {
+    newMessageText: string
+    addMessage: () => void
+    addNewMessageText: (text: string) => void
+}
 
-function MessageInput () {
-    let sendMessage = () => {
-        let text = sendMessageRef.current.value;
-        alert(text);
+function MessageInput(props: MessageInput) {
+    const onChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+        props.addNewMessageText(e.currentTarget.value)
     }
+    const onEnterPress = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
+        e.key === 'Enter' && props.addMessage()
+    }
+
     return (
-      <div>
-          <textarea ref={sendMessageRef} placeholder="Type your message..."/>
-          <div>
-              <button onClick={sendMessage}>Send</button>
-          </div>
-      </div>
+        <div>
+            <textarea
+                value={props.newMessageText}
+                placeholder="Type your message..."
+                onChange={onChange}
+                onKeyPress={onEnterPress}
+            />
+            <div>
+                <button onClick={props.addMessage}>Send</button>
+            </div>
+        </div>
     )
 }
 

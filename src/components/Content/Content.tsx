@@ -14,8 +14,6 @@ export type PropsType = {
 }
 
 function Content(props: PropsType) {
-
-
     return (
         <div className={styles.wrapper}>
             <Route
@@ -27,7 +25,7 @@ function Content(props: PropsType) {
             />
             <Route
                 path={'/messages'}
-                render={() => <Messages state={props.state.messagesPage}/>}/>
+                render={() => <Messages state={props.state.messagesPage} dispatch={props.dispatch}/>}/>
             <Route path={'/music'} component={Music}/>
             <Route path={'/news'} component={News}/>
             <Route path={'/settings'} component={Settings}/>

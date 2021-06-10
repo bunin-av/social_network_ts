@@ -1,8 +1,8 @@
 import React from "react";
 import styles from "./MyPosts.module.scss";
 import Post from "./Post/Post";
-import {addNewPostTextAC, addPostAC} from "../../../redux/state";
 import {PropsType} from "../../Content/Content";
+import {addNewPostTextAC, addPostAC} from "../../../redux/profile-reducer";
 
 
 function MyPosts(props: PropsType) {

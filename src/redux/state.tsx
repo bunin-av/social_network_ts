@@ -1,9 +1,11 @@
+import {addNewPostTextAC, addPostAC, profileReducer} from "./profile-reducer";
+import {addMessageAC, addNewMessageTextAC, messagesReducer} from "./messages-reducer";
+
 export type StateType = {
     profilePage: ProfilePageType
     messagesPage: MessagesPageType
     friendsSidebar: Array<FriendSideType>
 }
-
 
 export type ProfilePageType = {
     postsData: Array<PostType>
@@ -14,8 +16,8 @@ export type PostType = {
     text: string
     likes: number
 }
-
 export type MessagesPageType = {
+    newMessageText: string
     messagesData: Array<MessageType>
     dialogsData: Array<DialogType>
 }
@@ -28,24 +30,26 @@ export type DialogType = {
     userName: string
     avaUrl: string
 }
-
 export type FriendSideType = {
     id: number
     userName: string
     avaUrl: string
 }
 
-
 export type StoreType = {
     _state: StateType
     subscribe: (callback: () => void) => void
-    _renderEntireTree: () => void
+    _callSubscriber: (state: StateType) => void
     getState: () => StateType
     dispatch: (action: ActionsTypes) => void
 }
 
 
-export type ActionsTypes = ReturnType<typeof addPostAC> | ReturnType<typeof addNewPostTextAC>
+export type ActionsTypes =
+    ReturnType<typeof addPostAC>
+    | ReturnType<typeof addNewPostTextAC>
+    | ReturnType<typeof addMessageAC>
+    | ReturnType<typeof addNewMessageTextAC>
 
 const store: StoreType = {
     _state: {
@@ -58,6 +62,7 @@ const store: StoreType = {
             ],
         },
         messagesPage: {
+            newMessageText: '',
             messagesData: [
                 {id: 1, text: "Hi, man"},
                 {id: 2, text: "Hi, yo"},
@@ -105,37 +110,20 @@ const store: StoreType = {
         ]
     },
     subscribe(callback) {
-        this._renderEntireTree = callback
+        this._callSubscriber = callback
     },
-    _renderEntireTree() {
+    _callSubscriber() {
         console.log('state is changed')
     },
     getState() {
         return this._state
     },
     dispatch(action) {
-        switch (action.type) {
-            case "ADD_POST":
-                const newPost: PostType = {
-                    id: new Date().getTime(),
-                    text: this._state.profilePage.newPostText,
-                    likes: 0,
-                }
-                this._state.profilePage.postsData.unshift(newPost)
-                this._state.profilePage.newPostText = ''
-                this._renderEntireTree()
-                break;
-            case "ADD_NEW_POST_TEXT":
-                this._state.profilePage.newPostText = action.text
-                this._renderEntireTree()
-                break;
-        }
+        this._state.profilePage = profileReducer(this._state.profilePage, action)
+        this._state.messagesPage = messagesReducer(this._state.messagesPage, action)
+        this._callSubscriber(this._state)
     },
 }
-
-
-export const addPostAC = () => ({type: "ADD_POST"}) as const
-export const addNewPostTextAC = (text: string) => ({type: "ADD_NEW_POST_TEXT", text}) as const
 
 
 export default store;
